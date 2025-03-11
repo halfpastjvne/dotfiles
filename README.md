@@ -1,2 +1,3 @@
 # dotfiles
-Comes with an installer, will automatically download shit
+I'll add an installer.
+Hopefully this will be easy to read.

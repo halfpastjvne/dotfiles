@@ -1,0 +1,10 @@
+font-size = 12.7
+theme = nord
+background-opacity = 0.6
+resize-overlay = never
+font-family = "CaskaydiaCove Nerd Font"
+
+window-padding-x = 0 
+window-padding-y = 0
+
+custom-shader = ~/.config/ghostty/bloom.glsl

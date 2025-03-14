@@ -1,7 +1,9 @@
 import Quickshell
 import QtQuick
 import "Clock"
-
+import "Workspace"
+import "Mpris"
+import "Audio"
 Scope {
         Variants {
                 model: Quickshell.screens
@@ -13,7 +15,7 @@ Scope {
                                 top: true
                                 left: true
                         }
-                        width: 60
+                        width: 80
                         color: "transparent"
                         Rectangle {
                                 color: "#3b4252"
@@ -23,7 +25,7 @@ Scope {
                                         topMargin: 8
                                         bottomMargin: 8
                                 }
-                                radius: 10
+                                radius: 16
                                 border.width: 4
                                 border.color: "#2e3440"
                                 Column {
@@ -34,6 +36,7 @@ Scope {
                                                 top: parent.top
                                                 topMargin: 7
                                         }
+                                        Workspaces {}
                                 }
                                 Column {
                                         id: centerCol
@@ -48,6 +51,8 @@ Scope {
                                                 bottom: parent.bottom
                                                 bottomMargin: 7
                                         }
+                                        Audio {}
+                                        Music {}
                                         Time2Col {}
                                 }
                         }

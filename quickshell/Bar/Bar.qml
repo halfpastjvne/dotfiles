@@ -4,10 +4,13 @@ import "Clock"
 import "Workspace"
 import "Mpris"
 import "Audio"
+import "Settings"
+
 Scope {
         Variants {
                 model: Quickshell.screens
                 PanelWindow {
+                        id: bar
                         property var modelData
                         screen: modelData
                         anchors {
@@ -34,8 +37,9 @@ Scope {
                                         anchors {
                                                 horizontalCenter: parent.horizontalCenter
                                                 top: parent.top
-                                                topMargin: 7
+                                                topMargin: 0
                                         }
+                                        Gear {}
                                         Workspaces {}
                                 }
                                 Column {

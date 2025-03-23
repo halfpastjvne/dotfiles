@@ -2,18 +2,21 @@ import QtQuick
 import QtQuick.Effects
 import Quickshell.Services.Mpris
 import Quickshell.Widgets
-import Quickshell.Io
+import "./"
+import "../"
 
 ClippingRectangle {
-        visible: (Mpris.players.values[0].playbackState != MprisPlaybackState.Stopped || Mpris.players.values[0].playbackState == MprisPlaybackState.Paused)
+        property var player: Mpris.players.values[0]
+        visible: ((player.playbackState != MprisPlaybackState.Stopped || player.playbackState == MprisPlaybackState.Paused) && Mpris.players.values != undefined)
         width: 60
-        height: col.implicitHeight
+        height: col.height
         radius: 10
+        id: musWid
         border.width: 3
         border.color: "#2e3440"
         Image {
                 id: mprisImage
-                source: Mpris.players.values[0].trackArtUrl
+                source: player.trackArtUrl
                 height: parent.height
                 width: parent.height
                 anchors.centerIn: parent
@@ -26,60 +29,39 @@ ClippingRectangle {
                 blurMultiplier: -2
                 blur: 1.0
         }
+        MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.RightButton
+                onClicked: {
+                        mbw.item.visible = !mbw.item.visible;
+                }
+                MusicWidget {
+                        id: mbw
+                }
+        }
         Column {
+                height: implicitHeight+10
+                anchors.verticalCenterOffset: 5
                 anchors.centerIn: parent
                 id: col
-                spacing: 0
-                Text {
-                        color: "#d8dee9"
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: ""
-                        font.pointSize: 30
-                        MouseArea {
-                                hoverEnabled: true
-                                onEntered: {
-                                        parent.color = "#88c0d0"
-                                }
-                                onExited: {
-                                        parent.color = "#d8dee9"
-                                }
-                                anchors.fill: parent
-                                onClicked: Mpris.players.values[0].next()
-                        }
+                IButton {
+                        path: "forward"
+                        width: 45
+                        height: 45
+                        onClicked: player.next()
                 }
-                Text {
-                        color: "#d8dee9"
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: (Mpris.players.values[0].playbackState == MprisPlaybackState.Playing) ? "" : ""
-                        font.pointSize: 30
-                        MouseArea {
-                                hoverEnabled: true
-                                onEntered: {
-                                        parent.color = "#88c0d0"
-                                }
-                                onExited: {
-                                        parent.color = "#d8dee9"
-                                }
-                                anchors.fill: parent
-                                onClicked: Mpris.players.values[0].togglePlaying()
-                        }
+                IButton {
+                        path: (player.playbackState == MprisPlaybackState.Paused) ?
+                                "play" : "pause"
+                        width: 45
+                        height: 45
+                        onClicked: player.togglePlaying()
                 }
-                Text {
-                        color: "#d8dee9"
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: ""
-                        font.pointSize: 30
-                        MouseArea {
-                                hoverEnabled: true
-                                onEntered: {
-                                        parent.color = "#88c0d0"
-                                }
-                                onExited: {
-                                        parent.color = "#d8dee9"
-                                }
-                                anchors.fill: parent
-                                onClicked: Mpris.players.values[0].previous()
-                        }
+                IButton {
+                        path: "backward"
+                        width: 45
+                        height: 45
+                        onClicked: player.previous()
                 }
         }
 }
